@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .menu {
+            border: 1px solid #000;
+            width: 300px;
+            height: 50px;
+            margin: 10px 10px 0px 100px;
+        }
+
+        .menu p {
+            text-align: center;
+        }
+        .color {
+            background: aqua;
+        }
+        .subMenu {
+            border: 1px solid #000;
+            width: 300px;
+            display: none;
+            margin-left: -1px;
+        }
+        .subMenu ul {
+            padding: 0;
+            margin: 0;
+        }
+        .subMenu ul li {
+            border-bottom: 1px solid #000;
+            list-style-type: none;
+            padding: 10px;
+        }
+        .subMenu ul li:last-child {
+            border-bottom: 0;
+        }
+        .display {
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div id="menu" class="menu">
+    <p>MENU</p>
+
+    <div id="subMenu" class="subMenu">
+        <ul>
+            <li>Point 1</li>
+            <li>Point 2</li>
+            <li>Point 3</li>
+            <li>Point 4</li>
+        </ul>
+    </div>
+</div>
+
+
+
+<script>
+    menu.onmouseover = function (event) {
+        menu.classList.add('color');
+        subMenu.classList.add('display');
+        let target = event.target;
+        if (target.tagName === 'LI') {
+            target.classList.add('color');
+        }
+    }
+    menu.onmouseout = function (event) {
+        menu.classList.remove('color');
+        subMenu.classList.remove('display');
+        let target = event.target;
+        if (target.tagName === 'LI') {
+            target.classList.remove('color');
+        }
+    }
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<style>
+    .main-frame {
+        display: inline-block;
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+    }
+    svg {
+        width: 500px;
+        height: 500px;
+    }
+    .square {
+        width: 20px;
+        height: 20px;
+        stroke: crimson;
+        stroke-width: 10px;
+        fill: crimson;
+    }
+</style>
+
+<div class="main-frame">
+    <svg>
+        <rect class="square" id="square" x="0" y="0" />
+    </svg>
+</div>
+
+<script>
+    square.onclick = function(event) {
+        square.setAttribute('x', 480);
+        square.setAttribute('y', 480);
+    };
+
+    document.addEventListener('keydown', function(event) {
+        while (event.code === 'ArrowRight') {
+            alert('true');
+            square.setAttribute('x', 50);
+        }
+        /* if (event.code === 'ArrowRight') {
+            square.setAttribute('x', 50);
+        }*/
+    });
+
+</script>
+
+
+</body>
+</html>

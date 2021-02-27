@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 4px;
+        }
+        th {
+            cursor: pointer;
+        }
+        th:hover {
+            background: yellow;
+        }
+    </style>
+</head>
+
+<body>
+
+<table id="grid">
+    <thead>
+    <tr>
+        <th data-type="number">Возраст</th>
+        <th data-type="string">Имя</th>
+        <th data-type="string">Фамилия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>5</td>
+        <td>Вася</td>
+        <td>Иванов</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Петя</td>
+        <td>Петров</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Женя</td>
+        <td>Сидоров</td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    let tbody = grid.querySelector('tbody');
+    let arrRows = Array.from(tbody.rows);
+
+    grid.onclick = function (event) {
+        let target = event.target;
+        if (target.tagName !== 'TH')
+            return;
+
+        let targetType = target.dataset.type;
+        let colNum = target.cellIndex;
+        switch (targetType) {
+            case 'number':
+                arrRows.sort((a, b) => a.cells[colNum].innerHTML - b.cells[colNum].innerHTML);
+                tbody.append(...arrRows);
+                break;
+            case 'string':
+                arrRows.sort((a, b) => {
+                    if (a.cells[colNum].innerHTML > b.cells[colNum].innerHTML) return 1;
+                    if (a.cells[colNum].innerHTML === b.cells[colNum].innerHTML) return 0;
+                    if (a.cells[colNum].innerHTML < b.cells[colNum].innerHTML) return -1;
+                });
+                tbody.append(...arrRows);
+                break;
+        }
+    }
+</script>
+
+</body>
+</html>

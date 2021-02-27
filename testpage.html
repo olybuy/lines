@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<style>
+    .main-frame {
+        display: inline-block;
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+    }
+    .choose {
+        display: inline-block;
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+    }
+    svg {
+        width: 500px;
+        height: 500px;
+    }
+    .frame {
+        width: 200px;
+        height: 200px;
+        stroke: crimson;
+        stroke-width: 10px;
+        fill: none;
+    }
+    .lineFirst {
+        stroke: violet;
+        stroke-width: 10px;
+    }
+</style>
+
+<div class="main-frame">
+    <svg>
+        <rect class="frame" id="frame" x="10" y="10" />
+    </svg>
+</div>
+<div class="choose">
+    <svg>
+        <line class="lineFirst" x1="30" x2="30" y1="10" y2="200" />
+    </svg>
+</div>
+
+<script>
+   frame.onmousedown = function(event) {
+       moveAt(event.pageX, event.pageY);
+       function moveAt(pageX, pageY) {
+           frame.style.width = pageX - 15 + "px";
+           frame.style.height = pageY - 15 + "px";
+       }
+       document.addEventListener('mousemove', onMouseMove);
+       document.addEventListener('mouseup', onMouseUp);
+       function onMouseMove(event) {
+           moveAt(event.pageX, event.pageY);
+       }
+       function onMouseUp() {
+           document.removeEventListener('mouseup', onMouseUp);
+           document.removeEventListener('mousemove', onMouseMove);
+       }
+    };
+
+
+
+</script>
+
+
+</body>
+</html>

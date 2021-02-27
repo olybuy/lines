@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .counter {
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <span class="number">0</span>
+    <span class="counter" type="submit">Счетчик</span>
+    <script>
+        let number = document.querySelector('.number');
+        let counter = document.querySelector('.counter');
+        counter.onclick = function () {
+            console.log('jmak');
+            number.textContent++;
+        }
+    </script>
+</body>
+</html>

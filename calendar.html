@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    td,
+    th {
+        border: 1px solid black;
+        padding: 3px;
+        text-align: center;
+    }
+
+    th {
+        font-weight: bold;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<div id="cal"></div>
+
+<script>
+    function createCalendar(elem, year, month) {
+        let calendar = document.createElement('table');
+        elem.append(calendar);
+
+        let firstLine = document.createElement('tr');
+        calendar.append(firstLine);
+
+        let namesOfDays = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+
+        for (let i = 0; i < 7; i++) {
+            let firstLineCont = document.createElement('td');
+            firstLineCont.innerHTML = namesOfDays[i];
+            firstLine.append(firstLineCont);
+        }
+
+        let line = document.createElement('tr');
+        calendar.append(line);
+
+        month = month - 1;
+
+        for (let i = 1; i <= 31; i++) {
+            let date = new Date(year, month, i);
+            if (date.getMonth() === month +1) break;
+
+            let day = document.createElement('td');
+
+            if (date.getDate() === 1 && date.getDay() !== 1) {
+                for (let j = 0; j < date.getDay() - 1; j++) {
+                    let emptyCell = document.createElement('td');
+                    emptyCell.innerHTML = '';
+                    line.append(emptyCell);
+                }
+            }
+
+            date = date.getDate();
+            day.innerHTML = date;
+            line.append(day);
+
+            let lastDay = new Date(year, month, i+1);
+            if (lastDay.getMonth() === month +1) break;
+
+            if (line.children.length === 7) {
+                line = document.createElement('tr');
+                calendar.append(line);
+            }
+        }
+
+        if (line.children.length < 7) {
+            for (let j = line.children.length; j < 7; j++) {
+                let emptyCell = document.createElement('td');
+                emptyCell.innerHTML = '';
+                line.append(emptyCell);
+            }
+        }
+    }
+    createCalendar(cal, 2015, 4);
+</script>
+
+</body>
+
+</html>

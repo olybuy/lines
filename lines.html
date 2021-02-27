@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<style>
+    .main-table {
+        border-collapse: collapse;
+        background: linear-gradient(to top, lightgray, white);
+    }
+
+    .main-table td {
+        border: 1px solid gray;
+        width: 90px;
+        height: 90px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .active {
+        opacity: 0.7;
+    }
+
+    .small {
+        opacity: 0.5;
+    }
+
+    .red {
+        background: url("img/ball-red.png") no-repeat center center;
+        background-size: 80% 80%;
+    }
+
+    .blue {
+        background: url("img/ball-blue.png") no-repeat center center;
+        background-size: 80% 80%;
+    }
+
+    .green {
+        background: url("img/ball-green.png") no-repeat center center;
+        background-size: 80% 80%;
+    }
+
+    .orange {
+        background: url("img/ball-orange.png") no-repeat center center;
+        background-size: 80% 80%;
+    }
+</style>
+
+<table class="main-table" id="table">
+    <tr>
+        <td class="red colored"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="blue colored"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<script>
+    let color;
+    let tdColors = ['red', 'blue', 'orange'];
+
+    table.onclick = function (event) {
+        let target = event.target;
+        if (target.classList.contains('colored')) {
+            if (document.querySelector('.active') !== null) {
+                let active = document.querySelector('.active');
+                active.classList.remove('active');
+                target.classList.add('active');
+            }
+            target.classList.toggle('active');
+            for (let elem of target.classList) {
+                if (elem !== 'colored' && elem !== 'active') {
+                    color = elem;
+                }
+            }
+        } else {
+            if (document.querySelector('.active') !== null) {
+                target.classList.add(color, 'colored');
+                document.querySelector('.active').className = '';
+                let emptyTdArr = table.querySelectorAll('td:not(.colored)');
+                random(emptyTdArr, tdColors);
+                random(emptyTdArr, tdColors);
+                let maxArr = table.querySelectorAll('td');
+                deleteLines(maxArr);
+            }
+        }
+    }
+
+    function randomBefore(array, colors) {
+        let emptyTdArr = table.querySelectorAll('td:not(.colored)');
+    }
+
+    function random(array, colors) {
+        let randomNum = Math.floor(Math.random() * array.length); // место для появления
+        let randomColor = Math.floor(Math.random() * colors.length); // цвет для появления
+        array[randomNum].classList.add(colors[randomColor], 'colored', 'small');
+    }
+
+    function deleteLines(array) {
+        let objArr = []; // массив объектов
+        for (let i = 0; i < array.length; i++) {
+            let index = {
+                colNum: array[i].cellIndex,
+                class: array[i].className,
+                td: array[i]
+            }
+
+            if (i <= 5) {
+                index.rowNum = 0;
+            } else if (i > 5 && i <= 11) {
+                index.rowNum = 1;
+            } else if (i > 11 && i <= 17) {
+                index.rowNum = 2;
+            } else if (i > 17 && i <= 23) {
+                index.rowNum = 3;
+            } else if (i > 23 && i <= 29) {
+                index.rowNum = 4;
+            } else {
+                index.rowNum = 5;
+            }
+            objArr.push(index);
+        }
+
+        let rowArr = []; // массив строк
+        for (let i = 0; i < objArr.length; i += 6) {
+            let rowTdArr = objArr.slice(i, i + 6); // массив ячеек в строке
+            rowArr.push(rowTdArr); // добавляем строку в массив
+        }
+
+        let columnArr = []; // массив столбцов
+        let colTdArr = [];
+        for (let i = 0; i < 6; i++) {
+            for (let elem of objArr) {
+                if (elem.colNum === i) {
+                    colTdArr.push(elem);
+                }
+            }
+            columnArr.push(colTdArr);
+            colTdArr = [];
+        }
+
+        checkLines(rowArr);
+        checkLines(columnArr);
+
+        for (let elem of arrForClear) {
+            elem.td.className = '';
+        }
+        arrForClear = [];
+    }
+
+    function test() {
+        let arr = generateTestData('rrrbgb');
+        checkLines(arr);
+        console.log('result:', arrForClear);
+    }
+
+    function generateTestData(row) {
+        return [[
+            {
+                colNum: 0,
+                class: row[0],
+                td: 0
+            },
+            {
+                colNum: 1,
+                class: row[1],
+                td: 0
+            },
+            {
+                colNum: 2,
+                class: row[2],
+                td: 0
+            },
+            {
+                colNum: 3,
+                class: row[3],
+                td: 0
+            },
+            {
+                colNum: 4,
+                class: row[4],
+                td: 0
+            },
+            {
+                colNum: 5,
+                class: row[5],
+                td: 0
+            }
+        ]];
+    }
+
+    let arrForClear = [];
+
+    test();
+
+    function checkLines(rowArray) {
+        let lineArray = []; // массив под линию
+        for (let row of rowArray) { // row - коллекция ячеек из строки
+            for (let i = 0; i < 6; i++) {
+                if (row[i].class !== '') { // находим цветную ячейку
+                    let tdColor = row[i].class; // запоминаем ее цвет
+                    lineArray.push(row[i]); // добавляем цветную ячейку в массив
+                    for (let j = 1; j < 6 - i; j++) {
+                        if (row[i + j].class === tdColor) { // пока следующая от цветной ячейки совпадает с ней
+                            lineArray.push(row[i + j]); // добавляем эту ячейку в массив
+                        } else if (lineArray.length < 3) { // если в массиве больше 3 элементов
+                            lineArray = []; // обнуляем массив
+                        }
+                    }
+                }
+                if (lineArray.length >= 3) {
+                    arrForClear = arrForClear.concat(lineArray);
+                    lineArray = []; // обнуляем массив
+                } else {
+                    lineArray = [];
+                }
+            }
+        }
+    }
+
+
+</script>
+
+</body>
+</html>
