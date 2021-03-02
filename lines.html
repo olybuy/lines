@@ -138,7 +138,7 @@
     function random(array, colors) {
         let randomNum = Math.floor(Math.random() * array.length); // место для появления
         let randomColor = Math.floor(Math.random() * colors.length); // цвет для появления
-        array[randomNum].classList.add(colors[randomColor], 'colored', 'small');
+        array[randomNum].classList.add(colors[randomColor], 'colored');
     }
 
     function deleteLines(array) {
