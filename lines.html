@@ -149,28 +149,37 @@
             }
         } else {
             if (document.querySelector('.active') !== null) { // если есть активный элемент
-                let isSmall = false;
-                if (target.classList.contains('small')) {
-                    isSmall = true;
-                }
+                let isSmall = isTargetNotEmpty(target);
 
-                target.className = '';
-                target.classList.add(color, 'colored');
-                document.querySelector('.active').className = '';
+                moveLines(target, color);
 
                 pushPredictLines();
 
+                let mainArr = getMainArr();
+                deleteLines(mainArr);
+
+                doPredictLines()
+
                 if (isSmall) {
-                    console.log('add one more circle');
                     let emptyTdArr = getEmptyTdArr();
                     doRandomLines(emptyTdArr, tdColors, 'colored');
                 }
-
-                let mainArr = table.querySelectorAll('td');
-                deleteLines(mainArr);
-                doPredictLines()
             }
         }
+    }
+
+    function isTargetNotEmpty(target) {
+        return target.classList.contains('small');
+    }
+
+    function getMainArr() {
+        return table.querySelectorAll('td');
+    }
+
+    function moveLines(target, color) {
+        target.className = '';
+        target.classList.add(color, 'colored');
+        document.querySelector('.active').className = '';
     }
 
     function pushPredictLines() {
