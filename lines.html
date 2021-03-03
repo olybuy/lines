@@ -103,8 +103,9 @@
 <script>
     let color;
     let tdColors = ['red', 'blue', 'orange'];
+    let arrForClear = []; // массив для очистки
 
-    firstRandom();
+    predictLines();
 
     table.onclick = function (event) {
         let target = event.target;
@@ -133,11 +134,11 @@
                         elem.classList.add('colored');
                     }
                     let emptyTdArr = getEmptyTdArr();
-                    random(emptyTdArr, tdColors);
+                    pushRandomLines(emptyTdArr, tdColors, 'colored');
                 }
                 let maxArr = table.querySelectorAll('td');
                 deleteLines(maxArr);
-                firstRandom()
+                predictLines()
             }
         }
     }
@@ -146,22 +147,16 @@
         return table.querySelectorAll('td:not(.colored)');
     }
 
-    function firstRandom() {
+    function predictLines() {
         let emptyTdArr = getEmptyTdArr();
-        randomSmall(emptyTdArr, tdColors);
-        randomSmall(emptyTdArr, tdColors);
+        pushRandomLines(emptyTdArr, tdColors, 'small');
+        pushRandomLines(emptyTdArr, tdColors, 'small');
     }
 
-    function randomSmall(array, colors) {
+    function pushRandomLines(array, colors, style) {
         let randomNum = Math.floor(Math.random() * array.length); // место для появления
         let randomColor = Math.floor(Math.random() * colors.length); // цвет для появления
-        array[randomNum].classList.add(colors[randomColor], 'small');
-    }
-
-    function random(array, colors) {
-        let randomNum = Math.floor(Math.random() * array.length); // место для появления
-        let randomColor = Math.floor(Math.random() * colors.length); // цвет для появления
-        array[randomNum].classList.add(colors[randomColor], 'colored');
+        array[randomNum].classList.add(colors[randomColor], style);
     }
 
     function deleteLines(array) {
@@ -221,7 +216,6 @@
         checkLines(arr);
         console.log('result:', arrForClear);
     }
-
     function generateTestData(row) {
         return [[
             {
@@ -256,9 +250,6 @@
             }
         ]];
     }
-
-    let arrForClear = [];
-
     test();
 
     function checkLines(rowArray) {
@@ -285,7 +276,6 @@
             }
         }
     }
-
 
 </script>
 
