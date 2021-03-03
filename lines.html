@@ -203,11 +203,11 @@
         let objArr = getObjArr(array);
         let rowArr = getRowArr(objArr);
         let columnArr = getColumnArr(objArr);
-
-        getDiagonalArr(rowArr);
+        let diagonalArr = getDiagonalArr(objArr);
 
         checkLines(rowArr);
         checkLines(columnArr);
+        checkLines(diagonalArr);
 
         counter(arrForClear);
 
@@ -279,31 +279,30 @@
     function getDiagonalArr(array) {
         let diagonalArr = [];
         let diagonalRow = [];
-        let diagonalRow2 = [];
-        let diagonalRow3 = [];
-        let diagonalRow4 = [];
 
-        for (let i = 0; i < 6; i++) {
-
-        }
-
-        for (let i = 0; i < 6; i++) {
-            for (let j = 0; j < 6; j++) {
-                if (i === j) {
-                    diagonalRow.push(array[i][j]);
-                }
-                if (i - j === 1) {
-                    diagonalRow2.push(array[i][j]);
-                }
-                if (i - j === -1) {
-                    diagonalRow3.push(array[i][j]);
-                }
-                if (i - j === 2) {
-                    diagonalRow4.push(array[i][j]);
+        for (let n = -3; n <= 6; n++) {
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].colNum - array[i].rowNum === n) {
+                    diagonalRow.push(array[i]);
                 }
             }
+            if (diagonalRow.length >= 3) {
+                diagonalArr.push(diagonalRow);
+            }
+            diagonalRow = [];
         }
-        console.log(diagonalRow4);
+        for (let n = 2; n <= 8; n++) {
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].colNum + array[i].rowNum === n) {
+                    diagonalRow.push(array[i]);
+                }
+            }
+            if (diagonalRow.length >= 3) {
+                diagonalArr.push(diagonalRow);
+            }
+            diagonalRow = [];
+        }
+        return diagonalArr;
     }
 
     function checkLines(rowArray) {
