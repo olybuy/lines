@@ -308,11 +308,11 @@
     function checkLines(rowArray) {
         let lineArray = []; // массив под линию
         for (let row of rowArray) { // row - коллекция ячеек из строки
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < row.length; i++) {
                 if (row[i].class !== '') { // находим цветную ячейку
                     let tdColor = row[i].class; // запоминаем ее цвет
                     lineArray.push(row[i]); // добавляем цветную ячейку в массив
-                    for (let j = 1; j < 6 - i; j++) {
+                    for (let j = 1; j < row.length - i; j++) {
                         if (row[i + j].class === tdColor) { // пока следующая от цветной ячейки совпадает с ней
                             lineArray.push(row[i + j]); // добавляем эту ячейку в массив
                         } else if (lineArray.length < 3) { // если в массиве меньше 3 элементов
