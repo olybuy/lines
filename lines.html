@@ -25,7 +25,7 @@
     }
 
     .small {
-        opacity: 0.5;
+        opacity: 0.2;
     }
 
     .red {
@@ -104,6 +104,8 @@
     let color;
     let tdColors = ['red', 'blue', 'orange'];
 
+    firstRandom();
+
     table.onclick = function (event) {
         let target = event.target;
         if (target.classList.contains('colored')) {
@@ -119,20 +121,41 @@
                 }
             }
         } else {
-            if (document.querySelector('.active') !== null) {
+            if (document.querySelector('.active') !== null) { // если есть активный элемент
+                target.className = '';
                 target.classList.add(color, 'colored');
                 document.querySelector('.active').className = '';
-                let emptyTdArr = table.querySelectorAll('td:not(.colored)');
-                random(emptyTdArr, tdColors);
-                random(emptyTdArr, tdColors);
+
+                if (document.querySelector('.small') !== null) {
+                    let elements = document.querySelectorAll('.small');
+                    for (let elem of elements) {
+                        elem.classList.remove('small');
+                        elem.classList.add('colored');
+                    }
+                    let emptyTdArr = getEmptyTdArr();
+                    random(emptyTdArr, tdColors);
+                }
                 let maxArr = table.querySelectorAll('td');
                 deleteLines(maxArr);
+                firstRandom()
             }
         }
     }
 
-    function randomBefore(array, colors) {
-        let emptyTdArr = table.querySelectorAll('td:not(.colored)');
+    function getEmptyTdArr() {
+        return table.querySelectorAll('td:not(.colored)');
+    }
+
+    function firstRandom() {
+        let emptyTdArr = getEmptyTdArr();
+        randomSmall(emptyTdArr, tdColors);
+        randomSmall(emptyTdArr, tdColors);
+    }
+
+    function randomSmall(array, colors) {
+        let randomNum = Math.floor(Math.random() * array.length); // место для появления
+        let randomColor = Math.floor(Math.random() * colors.length); // цвет для появления
+        array[randomNum].classList.add(colors[randomColor], 'small');
     }
 
     function random(array, colors) {
