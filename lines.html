@@ -53,9 +53,19 @@
     .counter {
         width: 100px;
         height: 40px;
-        border: 1px solid black;
+        border: 1px solid gray;
         display: block;
         float: left;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .scores {
+        position: absolute;
+        text-transform: uppercase;
+        top: 0;
+        background: #fff;
+        padding: 2px;
     }
 </style>
 
@@ -111,9 +121,10 @@
     </table>
 
 
-<div class="counter">
+<span class="scores">Scores</span>
+<div class="counter">0</div>
 
-</div>
+
 
 <script>
     let color;
@@ -190,13 +201,12 @@
 
     function deleteLines(array) {
         let objArr = getObjArr(array);
-
         let rowArr = getRowArr(objArr);
-
         let columnArr = getColumnArr(objArr);
 
-        checkLines(rowArr);
+        getDiagonalArr(rowArr);
 
+        checkLines(rowArr);
         checkLines(columnArr);
 
         counter(arrForClear);
@@ -208,10 +218,9 @@
     }
 
     function counter(array) {
-        console.log(array);
-        if (array.length === 3) {
+        if (array.length >= 3) {
             let currentCounter = +document.querySelector('.counter').innerHTML;
-            currentCounter += 3;
+            currentCounter += array.length;
             document.querySelector('.counter').innerHTML = currentCounter;
         }
     }
@@ -267,6 +276,36 @@
         return columnArr;
     }
 
+    function getDiagonalArr(array) {
+        let diagonalArr = [];
+        let diagonalRow = [];
+        let diagonalRow2 = [];
+        let diagonalRow3 = [];
+        let diagonalRow4 = [];
+
+        for (let i = 0; i < 6; i++) {
+
+        }
+
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 6; j++) {
+                if (i === j) {
+                    diagonalRow.push(array[i][j]);
+                }
+                if (i - j === 1) {
+                    diagonalRow2.push(array[i][j]);
+                }
+                if (i - j === -1) {
+                    diagonalRow3.push(array[i][j]);
+                }
+                if (i - j === 2) {
+                    diagonalRow4.push(array[i][j]);
+                }
+            }
+        }
+        console.log(diagonalRow4);
+    }
+
     function checkLines(rowArray) {
         let lineArray = []; // массив под линию
         for (let row of rowArray) { // row - коллекция ячеек из строки
@@ -277,13 +316,14 @@
                     for (let j = 1; j < 6 - i; j++) {
                         if (row[i + j].class === tdColor) { // пока следующая от цветной ячейки совпадает с ней
                             lineArray.push(row[i + j]); // добавляем эту ячейку в массив
-                        } else if (lineArray.length < 3) { // если в массиве больше 3 элементов
+                        } else if (lineArray.length < 3) { // если в массиве меньше 3 элементов
                             lineArray = []; // обнуляем массив
                         }
                     }
                 }
                 if (lineArray.length >= 3) {
                     arrForClear = arrForClear.concat(lineArray);
+                    i = i + arrForClear.length;
                     lineArray = []; // обнуляем массив
                 } else {
                     lineArray = [];
