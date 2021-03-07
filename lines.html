@@ -127,7 +127,6 @@
 
 
 <script>
-
     let color;
     let tdColors = ['red', 'blue', 'orange'];
     let arrForClear = []; // массив для очистки
@@ -152,11 +151,13 @@
             if (document.querySelector('.active') !== null) { // если есть активный элемент
                 let isSmall = isTargetNotEmpty(target);
 
+                let mainArr = getMainArr();
+                checkPath(target, mainArr); // true/false
+
                 moveLines(target, color);
 
                 pushPredictLines();
 
-                let mainArr = getMainArr();
                 deleteLines(mainArr);
 
                 doPredictLines()
@@ -338,6 +339,29 @@
                     lineArray = [];
                 }
             }
+        }
+    }
+
+    function checkPath(target, mainArr) {
+        let startPoint = document.querySelector('.active');
+        let endPoint = target;
+        startPoint.classList.add('start');
+        endPoint.classList.add('end');
+        let currentArr = getObjArr(mainArr);
+        let startIndex;
+        let endIndex;
+        for (let i = 0; i < currentArr.length; i++) {
+            if (currentArr[i].class.includes('start')) {
+                currentArr[i].startPoint = true;
+                startIndex = i;
+            }
+            if (currentArr[i].class.includes('end')) {
+                currentArr[i].endPoint = true;
+            }
+        }
+        let startElem = currentArr.find(e => e.startPoint === true);
+        for (let i = startIndex; i < currentArr.length - i; i++) {
+
         }
     }
 
